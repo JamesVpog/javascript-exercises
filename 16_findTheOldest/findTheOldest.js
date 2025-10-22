@@ -7,20 +7,15 @@
 // - There are many ways of doing this using built-in array methods like `reduce`, or even chaining multiple! 
 // - One of the tests checks for people with no death-date.. use JavaScript's Date function to get their age as of today.
 const findTheOldest = function(people) {
+	const calculateAge = (person) => {
+		const currentYear = new Date().getFullYear();
+		const deathYear = person.yearOfDeath || currentYear;
+		return deathYear - person.yearOfBirth;
+	};
+
 	return people.reduce((acc, cur) => {
-		const curAge = cur.yearOfDeath
-			? cur.yearOfDeath - cur.yearOfBirth
-			: new Date().getFullYear() - cur.yearOfBirth;
-
-		const accAge = acc.yearOfDeath
-			? acc.yearOfDeath - acc.yearOfBirth
-			: new Date().getFullYear() - acc.yearOfBirth;
-
-		// Return the person with greater age
-		return curAge > accAge ? cur : acc;
-	})
-
+		return calculateAge(cur) > calculateAge(acc) ? cur : acc;
+	});
 };
-
 // Do not edit below this line
 module.exports = findTheOldest;
